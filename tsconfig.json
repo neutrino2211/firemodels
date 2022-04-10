@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "sourceMap": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "removeComments": false,
+      "noImplicitAny": false,
+      "lib": [
+        "es2015",
+        "dom"
+      ],
+      "outDir": "dist",
+      "moduleResolution": "node",
+      "allowJs": true,
+      "baseUrl": "./src",
+      "paths": {
+        "@middleware/*": [
+          "middleware/*"
+        ],
+        "@models/*": [
+          "models/*"
+        ],
+        "@stores/*": [
+          "stores/*"
+        ]
+      }
+    }
+}
+  
