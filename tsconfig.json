@@ -13,18 +13,7 @@
       "outDir": "dist",
       "moduleResolution": "node",
       "allowJs": true,
-      "baseUrl": "./src",
-      "paths": {
-        "@middleware/*": [
-          "middleware/*"
-        ],
-        "@models/*": [
-          "models/*"
-        ],
-        "@stores/*": [
-          "stores/*"
-        ]
-      }
+      "baseUrl": "./src"
     }
 }
   

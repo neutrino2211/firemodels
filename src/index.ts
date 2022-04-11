@@ -13,7 +13,9 @@ export class FiremodelApp {
     }
 }
 
+export * from "./link";
 export * from "./model";
+export * from "./decorators"
 
 /**
  * const instance = new Instance(app);

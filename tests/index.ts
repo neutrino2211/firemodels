@@ -70,7 +70,8 @@ let user: User = new BaseUser()
 let userId = "";
 
 const newUserTest = tests.createTest("New user", "Create new user", async () => {
-    console.log(user.userId, user.brief, user.fields, user.maskedFields.userId2);
+    console.warn(user.brief)
+    // console.log(user.userId, user.brief, user.model.fields, user.model.maskedFields.userId2);
     userId = user.userId;
     await user.store()
     return user.userId != ""
@@ -83,9 +84,8 @@ const makePostTest = tests.createTest("Create Post", "Create a new post and stor
 })
 
 const getPostsTest = tests.createTest("Get posts", "Get list of post from a model body", async() => {
-    const user = await new BaseUser().from(userId)
-    const post = user.posts[0]
-    console.log(await post.fromFirestore())
+    const user = await BaseUser.from(userId)
+    const post = await user.posts[0].fromFirestore()
     // console.log(user.posts)
     return user.posts.length > 0;
 })

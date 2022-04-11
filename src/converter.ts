@@ -1,11 +1,5 @@
 import * as firestore from "firebase/firestore";
 
-export function field(target: any, key: string) {
-    if (!target?._converter_fields) target._converter_fields = [];
-
-    target._converter_fields.push(key);
-}
-
 export class Converter<T> {
     private fields: string[] = []
     private factories: any = {};
