@@ -1,17 +1,45 @@
 {
   "name": "firemodels",
-  "version": "1.0.0",
+  "version": "0.0.1-nightly.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "ts-node tests/index.ts"
+    "test": "ts-node tests/index.ts",
+    "build": "tsc",
+    "publish-nightly": "npm publish --tag nightly",
+    "bump-nightly": "bump prerelease --preid nightly --push --commit --tag",
+    "nightly": "npm run build && npm run bump-nightly && npm run clean && npm run publish-nightly",
+    "publish-alpha": "npm publish --tag alpha",
+    "bump-alpha": "bump prerelease --preid alpha --push --commit --tag",
+    "alpha": "npm run build && npm run bump-alpha && npm run clean && npm run publish-alpha",
+    "publish-beta": "npm publish --tag beta",
+    "bump-beta": "bump prerelease --preid beta --push --commit --tag",
+    "beta": "npm run build && npm run bump-beta && npm run clean && npm run publish-beta",
+    "bump-patch": "bump patch --push --commit --tag",
+    "patch": "npm run build && npm run bump-patch && npm run clean && npm publish",
+    "bump-minor": "bump minor --push --commit --tag",
+    "minor": "npm run build && npm run bump-minor && npm run clean && npm publish",
+    "bump-major": "bump major --push --commit --tag",
+    "major": "npm run build && npm run bump-major && npm run clean && npm publish"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neutrino2211/firemodels.git"
+  },
+  "keywords": [
+    "firebase",
+    "orm",
+    "firestore"
+  ],
+  "author": "Tsowa Mainasara Al-amin <neutrino2211@gmail.com> (https://github.com/neutrino2211)",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/neutrino2211/firemodels/issues"
+  },
+  "homepage": "https://github.com/neutrino2211/firemodels#readme",
   "dependencies": {
     "axios": "^0.26.1",
-    "firebase": "^9.6.10",
+    "firebase": "^9.5.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -19,6 +47,7 @@
     "colors": "^1.4.0",
     "ora": "^5.4.0",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "version-bump-prompt": "^6.1.0"
   }
 }
