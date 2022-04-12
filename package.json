@@ -1,6 +1,6 @@
 {
   "name": "firemodels",
-  "version": "0.0.1-nightly.1",
+  "version": "0.0.1-nightly.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -20,7 +20,8 @@
     "bump-minor": "bump minor --push --commit --tag",
     "minor": "npm run build && npm run bump-minor && npm run clean && npm publish",
     "bump-major": "bump major --push --commit --tag",
-    "major": "npm run build && npm run bump-major && npm run clean && npm publish"
+    "major": "npm run build && npm run bump-major && npm run clean && npm publish",
+    "clean": "echo nothing to clean"
   },
   "repository": {
     "type": "git",
