@@ -12,8 +12,7 @@
       ],
       "outDir": "dist",
       "moduleResolution": "node",
-      "allowJs": true,
-      "baseUrl": "./src"
+      "allowJs": true
     }
 }
   

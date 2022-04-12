@@ -3,7 +3,7 @@ import { listOf } from "./decorators";
 import { ModelType } from "./types"
 
 export abstract class ModelBase {
-    protected _id: string = "";
+    protected _id: string;
     protected _app: FirebaseApp;
 
     static forApp<T = any>(app: FirebaseApp): ModelType<T> {

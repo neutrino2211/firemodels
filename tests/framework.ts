@@ -54,6 +54,7 @@ export class TestRunner {
                 spinner.fail()
                 aTestFailed = true;
                 old_log(`Error: ${e}`)
+                console.error(e)
                 break
             }
 

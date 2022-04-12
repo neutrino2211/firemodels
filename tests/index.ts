@@ -1,5 +1,5 @@
 import * as tests from "./framework";
-import {field, factory, masked, key, Model, ModelLink} from "../src";
+import {field, factory, masked, key, Model, FileModel, ModelLink, FileModelLink} from "../src";
 import * as uuid from "uuid";
 // Import the functions you need from the SDKs you need
 
@@ -38,6 +38,16 @@ class Post extends Model<Post> {
     @field details: string;
 }
 
+class TextFile extends FileModel<TextFile> {
+    constructor() {
+        super(TextFile, "texts", "txt")
+    }
+
+    get mod() {
+        return this.content.toString()
+    }
+}
+
 class User extends Model<User> {
     constructor() {
         super(User, "users")
@@ -47,6 +57,7 @@ class User extends Model<User> {
     @factory(uuid.v4) @field userId2: string;
 
     @Post.links() @field posts: Array<ModelLink<Post>> = [];
+    @TextFile.links() @field texts: Array<FileModelLink<TextFile>> = [];
 
     get brief() {
         return this.userId.slice(0, 6);
@@ -59,6 +70,13 @@ class User extends Model<User> {
 
         this.posts.push(post.link())
     }
+
+    async addText(text: string) {
+        const _text = new TextFile()
+        _text.content = Buffer.from(text)
+        _text.store();
+        this.texts.push(_text.link());
+    }
 }
 
 
@@ -70,7 +88,6 @@ let user: User = new BaseUser()
 let userId = "";
 
 const newUserTest = tests.createTest("New user", "Create new user", async () => {
-    console.warn(user.brief)
     // console.log(user.userId, user.brief, user.model.fields, user.model.maskedFields.userId2);
     userId = user.userId;
     await user.store()
@@ -79,23 +96,33 @@ const newUserTest = tests.createTest("New user", "Create new user", async () => 
 
 const makePostTest = tests.createTest("Create Post", "Create a new post and store on the user model", async() => {
     user.makePost("Hello World!!!")
+    user.addText("SUpppppppp!!!!!!!!!!!!");
+    console.log("MP", user.texts)
     await user.store()
     return true
 })
 
 const getPostsTest = tests.createTest("Get posts", "Get list of post from a model body", async() => {
     const user = await BaseUser.from(userId)
+    console.log(user.model.fields)
     const post = await user.posts[0].fromFirestore()
+    const text = await user.texts[0].fromStorage();
+    await text.fetchContent()
+    console.log(post.details, text.mod)
     // console.log(user.posts)
     return user.posts.length > 0;
 })
 
 const deleteUsersTest = tests.createTest("Delete Users", " Delete users from DB", async () => {
     user.delete()
-    // user.posts.forEach(async p => {
-    //     const post = await p.fromFirestore()
-    //     post.delete()
-    // })
+    user.posts.forEach(async p => {
+        const post = await p.fromFirestore()
+        post.delete()
+    })
+    user.texts.forEach(async t => {
+        const text = await t.fromStorage();
+        text.delete()
+    })
     return true
 })
 

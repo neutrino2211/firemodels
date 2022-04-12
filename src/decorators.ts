@@ -1,4 +1,4 @@
-import { ModelLink } from "./link";
+import { ModelLink, FileModelLink } from "./link";
 
 export function field(target: any, key: string) {
     if (!target?._converter_fields) target._converter_fields = [];
@@ -41,6 +41,21 @@ export function listOf(model: any) {
                 return data.map(k => new ModelLink(k, m._firestore, m.converter))
             } else {
                 return new ModelLink(data, m._firestore, m.converter)
+            }
+        }
+    }
+}
+
+export function fileListOf(model: any) {
+    return function (target: any, key: string) {
+        if (!target?._model_opts) target._model_opts = {};
+        if (!target?._model_opts?.links) target._model_opts.links = {};
+
+        target._model_opts.links[key] = (data: Array<string> | string) => {
+            if (Array.isArray(data)) {
+                return data.map(k => new FileModelLink(k, model))
+            } else {
+                return new FileModelLink(data, model)
             }
         }
     }
