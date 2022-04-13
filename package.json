@@ -1,6 +1,6 @@
 {
   "name": "firemodels",
-  "version": "0.0.2-nightly.1",
+  "version": "0.0.2-nightly.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -41,7 +41,11 @@
   "dependencies": {
     "axios": "^0.26.1",
     "firebase": "^9.5.0",
+    "firebase-admin": "^10.0.2",
     "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "firebase-admin": "^9.8.0"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",
