@@ -1,15 +1,11 @@
 import { FirebaseApp } from "firebase/app";
-import { listOf } from "./decorators";
-import { ModelType } from "./types"
+import { app } from "firebase-admin"
+import { listOf, adminListOf } from "./decorators";
+import { ModelType } from "./types";
 
-export abstract class ModelBase {
+abstract class _base {
     protected _id: string;
-    protected _app: FirebaseApp;
-
-    static forApp<T = any>(app: FirebaseApp): ModelType<T> {
-        this.prototype._app = app;
-        return this as any;
-    }
+    
 
     static links() {
         return listOf(this);
@@ -31,4 +27,26 @@ export abstract class ModelBase {
     abstract exists(): Promise<boolean>;
     abstract update(): Promise<void>;
     abstract delete(): Promise<void>;
+}
+
+export abstract class ModelBase extends _base {
+    protected _app: FirebaseApp;
+
+    static forApp<T = any>(app: FirebaseApp): ModelType<T> {
+        this.prototype._app = app;
+        return this as any;
+    }
+}
+
+export abstract class AdminModelBase extends _base {
+    protected _app: app.App;
+
+    static forApp<T = any>(app: app.App): ModelType<T> {
+        this.prototype._app = app;
+        return this as any;
+    }
+
+    static links() {
+        return adminListOf(this);
+    }
 }

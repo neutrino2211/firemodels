@@ -60,7 +60,7 @@ export class Model<T> extends ModelBase {
 
     async update() {
         const col = collection(this._firestore, this.collection).withConverter(this.converter)
-        const doc = firestore.doc(col, this.model.key)
+        const doc = firestore.doc(col, this.model.key).withConverter(this.converter)
         return firestore.updateDoc(doc, this.model.fields);
     }
 

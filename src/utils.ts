@@ -49,9 +49,10 @@ export class ModelUtils {
     get fields() {
         const f = this.converterFields;
 
+        const mod = this.getModel();
         const obj: any = {};
         for (const field of f) {
-            obj[field] = this.getModel()[field];
+            obj[field] = mod[field];
         }
         return obj
     }

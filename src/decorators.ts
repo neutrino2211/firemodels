@@ -1,4 +1,4 @@
-import { ModelLink, FileModelLink } from "./link";
+import { ModelLink, AdminModelLink, FileModelLink } from "./link";
 
 export function field(target: any, key: string) {
     if (!target?._converter_fields) target._converter_fields = [];
@@ -23,10 +23,12 @@ export function factory<T = any>(initiator: () => T) {
         if (!target?._model_opts) target._model_opts = {};
         if (!target?._model_opts?.factories) target._model_opts.factories = {};
         
+
+        target._model_opts.factories[key] = initiator;
+
         if (typeof target[key] == "undefined") {
-            target._model_opts.factories[key] = initiator()
-            target[key] = target._model_opts.factories[key];
-        } else target._model_opts.factories[key] = target[key];
+            target[key] = target._model_opts.factories[key]();
+        }
     }
 }
 
@@ -41,6 +43,22 @@ export function listOf(model: any) {
                 return data.map(k => new ModelLink(k, m._firestore, m.converter))
             } else {
                 return new ModelLink(data, m._firestore, m.converter)
+            }
+        }
+    }
+}
+
+export function adminListOf(model: any) {
+    return function (target: any, key: string) {
+        if (!target?._model_opts) target._model_opts = {};
+        if (!target?._model_opts?.links) target._model_opts.links = {};
+
+        target._model_opts.links[key] = (data: Array<string> | string) => {
+            const m = new model()
+            if (Array.isArray(data)) {
+                return data.map(k => new AdminModelLink(k, m._firestore, m.converter))
+            } else {
+                return new AdminModelLink(data, m._firestore, m.converter)
             }
         }
     }

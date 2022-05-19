@@ -12,7 +12,11 @@
       ],
       "outDir": "dist",
       "moduleResolution": "node",
-      "allowJs": true
-    }
+      "allowJs": true,
+      "declaration": true,
+      "rootDir": "src",
+    },
+
+    "exclude": ["./tests", "./dist"]
 }
   
