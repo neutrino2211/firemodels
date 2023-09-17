@@ -1,6 +1,6 @@
 {
   "name": "firemodels",
-  "version": "0.0.2-nightly.26",
+  "version": "0.0.2-nightly.27",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
