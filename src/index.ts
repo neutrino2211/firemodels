@@ -17,6 +17,8 @@ export * from "./link";
 export * from "./model";
 export * from "./storage";
 export * from "./decorators"
+export * from "./admin/model"
+export * from "./admin/storage"
 
 /**
  * const instance = new Instance(app);
