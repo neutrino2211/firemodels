@@ -1,4 +1,5 @@
 import * as firestore from "firebase-admin/firestore";
+import * as admin from "firebase-admin";
 import { AdminConverter } from "../converter";
 import { AdminModelLink } from "../link";
 import { ModelUtils } from "../utils";
@@ -7,18 +8,16 @@ import { AdminModelBase } from "../base";
 export class AdminModel<T> extends AdminModelBase {
 
     private converter: AdminConverter<T>;
-    private _firestore: firestore.Firestore;
 
     public model: ModelUtils;
 
-    constructor(instance: new () => T, private collection: string) {
+    constructor(instance: new () => T, private collection: string, protected _firestore: firestore.Firestore) {
         super();
         this.converter = new AdminConverter<T>(instance);
         this.model = new ModelUtils(this);
         for (const f in this.converter["factories"]) {
             this[f] = this.converter["factories"][f]();
         }
-        this._firestore = this._app.firestore()
     }
 
     link() {

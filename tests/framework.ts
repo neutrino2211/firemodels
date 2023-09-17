@@ -1,6 +1,10 @@
 // import ora from "ora";
 const ora = require("ora");
-import { green, bold, red } from "colors";
+import * as color from "colors";
+
+const green = color.green;
+const red = color.red;
+const bold = color.bold
 
 export type Test = {runner: () => boolean | Promise<boolean>, name: string, description: string};
 export class TestGroup {
